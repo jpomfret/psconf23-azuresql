@@ -17,8 +17,6 @@ if ($name) {
     $body = "Hello, $name. This HTTP triggered function executed successfully - v2."
 }
 
-Set-AzContext -Tenant $env:AZ_TENANT_ID -SubscriptionId $env:AZ_SUBSCRIPTION_ID
-
 New-AzStorageAccount -ResourceGroupName psconfeu-rg -Name $name -Location uksouth -SkuName Standard_GRS
 
 # Associate values to output bindings by calling 'Push-OutputBinding'.
