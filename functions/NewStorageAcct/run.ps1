@@ -17,6 +17,7 @@ try {
         ResourceGroupName = 'psconfeu-rg'
         Location = $location
         SkuName = $sku
+        Tag = @{ 'CreatedBy' = 'AzFunc' }
     }
     $results = New-AzStorageAccount @splatStorage
 
