@@ -13,18 +13,19 @@ try {
     $location = 'uksouth'
 
     $splatStorage = @{
-        Name = $name
+        Name              = $name
         ResourceGroupName = 'psconfeu-rg'
-        Location = $location
-        SkuName = $sku
-        Tag = @{ 'CreatedBy' = 'AzFunc' }
+        Location          = $location
+        SkuName           = $sku
+        Tag               = @{ 'CreatedBy' = 'AzFunc' }
     }
     $results = New-AzStorageAccount @splatStorage
 
     $body = [PSCustomObject]@{
         StorageAccountName = $Name
-        ProvisioningState =  $results.ProvisioningState
-        CreationTime = CreationTime
+        ProvisioningState  =  $results.ProvisioningState
+        CreationTime       = CreationTime
+        Tags               = $results.Tags
     }
 } catch {
     $body = [PSCustomObject]@{
