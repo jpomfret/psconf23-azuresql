@@ -13,14 +13,15 @@ $name = $Request.Query.Name
 #    $name = $Request.Body.Name
 #}
 
-if ($name) {
-    $body = "Hello, $name. This HTTP triggered function executed successfully - v2."
+$body = [PSCustomObject]@{
+    StorageAccountName = $Name
+    Test = 'Hi'
 }
 
-New-AzStorageAccount -ResourceGroupName psconfeu-rg -Name $name -Location uksouth -SkuName Standard_GRS
+New-AzStorageAccount -ResourceGroupName psconfeu-rg -Name $name -Location uksouth -SkuName Standard_LRS
 
 # Associate values to output bindings by calling 'Push-OutputBinding'.
 Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
     StatusCode = [HttpStatusCode]::OK
-    Body = $body
+    Body = (ConvertTo-Json $body)
 })
