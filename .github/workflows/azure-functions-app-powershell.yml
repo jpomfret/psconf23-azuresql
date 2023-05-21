@@ -21,6 +21,8 @@ name: Deploy PowerShell project to Azure Function App
 on:
   push:
     branches: ["main"]
+    paths:
+      - 'functions/**' # Only trigger the workflow when files in the 'my-folder' directory are edited
 
 env:
   AZURE_FUNCTIONAPP_NAME: 'psconfeu2023'   # set this to your function app name on Azure
