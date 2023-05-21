@@ -23,8 +23,8 @@ try {
 
     $body = [PSCustomObject]@{
         StorageAccountName = $Name
-        ProvisioningState  =  $results.ProvisioningState
-        CreationTime       = CreationTime
+        ProvisioningState  = $results.ProvisioningState
+        CreationTime       = $results.CreationTime
         Tags               = $results.Tags
     }
 } catch {
