@@ -7,5 +7,5 @@
     # To use the Az module in your function app, please uncomment the line below.
     #'Az' = '9.*'
     'Az.Accounts' = '2.*'
-    'Az.Storage' = '5.*'
+    'Az.Storage' = '5.3.0' # when using 5.6 I got `The Azure PowerShell session has not been properly initialized.  Please import the module and try again.`
 }
