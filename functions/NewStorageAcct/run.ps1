@@ -19,7 +19,7 @@ try {
         SkuName           = $sku
         Tag               = @{ 'CreatedBy' = 'AzFunc' }
     }
-    $results = New-AzStorageAccount @splatStorage -ErrorAction Stop
+    $results = New-AzStorageAccount @splatStorage
 
     $body = [PSCustomObject]@{
         StorageAccountName = $Name
@@ -27,17 +27,20 @@ try {
         CreationTime       = $results.CreationTime
         Tags               = $results.Tags
     }
+    $status = [HttpStatusCode]::OK
+
 } catch {
     $body = [PSCustomObject]@{
         Error = $_.Exception.Message
         #Success = $false
         ProvisioningState =  $results.ProvisioningState
     }
+    $status = [HttpStatusCode]::BadRequest
 } finally {
 
     # Associate values to output bindings by calling 'Push-OutputBinding'.
     Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
-        StatusCode = [HttpStatusCode]::OK
+        StatusCode = $status
         Body = (ConvertTo-Json $body)
     })
 

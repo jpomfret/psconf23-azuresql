@@ -23,17 +23,24 @@ try {
             SkuName           = $sku
             Tag               = @{ 'CreatedBy' = 'AzFuncV2' }
         }
-        $results = New-AzStorageAccount @splatStorage -ErrorAction Stop
+        $results = New-AzStorageAccount @splatStorage
     }
 
     $body = [PSCustomObject]@{ 
         logMessage = ('{0} created - {1}' -f $order.storageAcctName, $results.ProvisioningState)
     }
+    $status = [HttpStatusCode]::OK
 } catch {
     $body = [PSCustomObject]@{
         logMessage = ('{0} - {1}' -f $results.ProvisioningState, $_.Exception.Message)
     }
+    $status = [HttpStatusCode]::BadRequest
 } finally {
     # Push output to the log table.
     Push-OutputBinding -Name log -Value $body
+
+    Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
+        StatusCode = $status
+        Body = (ConvertTo-Json $body)
+    })
 }
