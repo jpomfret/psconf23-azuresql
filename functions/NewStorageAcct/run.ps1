@@ -19,7 +19,7 @@ try {
         SkuName           = $sku
         Tag               = @{ 'CreatedBy' = 'AzFunc' }
     }
-    $results = New-AzStorageAccount @splatStorage
+    $results = New-AzStorageAccount @splatStorage -ErrorAction Stop
 
     $body = [PSCustomObject]@{
         StorageAccountName = $Name
