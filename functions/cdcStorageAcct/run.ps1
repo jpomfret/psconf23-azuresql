@@ -5,10 +5,16 @@ param($stgAcctChanges)
 Import-Module Az.Storage
 # The output is used to inspect the trigger binding parameter in test methods.
 # Use -Compress to remove new lines and spaces for testing purposes.
-$changesJson = $stgAcctChanges | ConvertTo-Json -Compress
-Write-Host "SQL Changes: $changesJson"
+#$changesJson = $stgAcctChanges | ConvertTo-Json -Compress
+#Write-Host "SQL Changes: $changesJson"
 
 try {
+
+    #$stgAcctChanges[0]
+    #$stgAcctChanges | Measure-Object
+    
+
+    $logMessage = 'Creating storage account(s): '
     # foreach change create a storage account
     foreach ($change in $stgAcctChanges) {
         Write-Host ("Change operation: {0}" -f $change.Operation)
@@ -26,12 +32,16 @@ try {
             Tag               = @{ 'CreatedBy' = 'AzFuncV2' }
         }
         $results = New-AzStorageAccount @splatStorage -ErrorAction Stop
+        $logMessage += ('{0} created - {1}' -f $change.Item.storageAcctName, $results.ProvisioningState)
     }
 
     $body = [PSCustomObject]@{ 
-        logMessage = ('{0} created - {1}' -f $order.storageAcctName, $results.ProvisioningState)
+        logMessage = $logMessage
     }
 } catch {
+    
+    write-error $_.Exception
+    #write-error $_.Exception.Message
     $body = [PSCustomObject]@{
         logMessage = ('{0} - {1}' -f $results.ProvisioningState, $_.Exception.Message)
     }
