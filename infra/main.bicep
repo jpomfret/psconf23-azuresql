@@ -5,8 +5,11 @@ param serverName string
 
 @minLength(1)
 @maxLength(128)
-@description('Name of the database - Cant use: <>*%&:\\/? or control characters Cant end with period or space')
+@description('Name of the inventory database - demo1 - Cant use: <>*%&:\\/? or control characters Cant end with period or space')
 param databaseName string
+
+@description('Name of the inventory database - demo2 - Cant use: <>*%&:\\/? or control characters Cant end with period or space')
+param databaseName2 string
 
 @allowed([
   ''
@@ -18,6 +21,7 @@ param databaseName string
 param environment string = ''
 
 var dbName = environment == '' ? databaseName : '${databaseName}-${environment}'
+var dbName2 = environment == '' ? databaseName2 : '${databaseName2}-${environment}'
 
 @description('The location for the SQL Server')
 param location string
@@ -64,6 +68,12 @@ var sqlServerName = sqlserver.name
 
 resource sqldatabase 'Microsoft.Sql/servers/databases@2021-05-01-preview' = {
   name: '${sqlServerName}/${dbName}'
+  location: location
+  tags: tags
+}
+
+resource sqldatabase2 'Microsoft.Sql/servers/databases@2021-05-01-preview' = {
+  name: '${sqlServerName}/${dbName2}'
   location: location
   tags: tags
 }

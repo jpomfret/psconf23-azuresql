@@ -1,3 +1,5 @@
+Connect-AzAccount -UseDeviceAuthentication
+
 Set-AzContext -Subscription bbd50fd8-6a3e-4d6f-8d20-cf6f43c9c461
 
 # create a new resource group
@@ -17,6 +19,7 @@ $splat = @{
     TemplateFile               = '.\infra\main.bicep'
     serverName                 = 'psconfeu-server'
     databaseName               = 'psconfeu-db'
+    databaseName2              = 'psconfeu-db-cdc'
     environment                = 'dev'
     location                   = $location
     administratorLogin         = 'sqladmin'
