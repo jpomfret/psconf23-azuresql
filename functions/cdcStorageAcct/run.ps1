@@ -32,7 +32,7 @@ try {
             Tag               = @{ 'CreatedBy' = 'AzFuncV2' }
         }
         $results = New-AzStorageAccount @splatStorage -ErrorAction Stop
-        $logMessage += ('{0} created - {1}' -f $change.Item.storageAcctName, $results.ProvisioningState)
+        $logMessage += ('{0} created - {1}; ' -f $change.Item.storageAcctName, $results.ProvisioningState)
     }
 
     $body = [PSCustomObject]@{ 

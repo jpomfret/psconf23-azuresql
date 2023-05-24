@@ -6,6 +6,6 @@
     # For latest supported version, go to 'https://www.powershellgallery.com/packages/Az'.
     # To use the Az module in your function app, please uncomment the line below.
     #'Az' = '9.*'
-    'Az.Accounts' = '2.*'
-    'Az.Storage' = '5.4.1'  # when using 5.6 I got `The Azure PowerShell session has not been properly initialized.  Please import the module and try again.`
+    #'Az.Accounts' = '2.*'
+    'Az.Storage' = '5.6.0'  # when using 5.6 I got `The Azure PowerShell session has not been properly initialized.  Please import the module and try again.`
 }
